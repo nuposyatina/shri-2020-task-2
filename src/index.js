@@ -5,7 +5,8 @@ const rules = [
   require('./rules/text.several_h1'),
   require('./rules/text.invalid_h2_position'),
   require('./rules/text.invalid_h3_position'),
-  require('./rules/grid.too_much_marketing_blocks')
+  require('./rules/grid.too_much_marketing_blocks'),
+  require('./rules/warning.text_sizes_should_be_equal')
 ]
 
 

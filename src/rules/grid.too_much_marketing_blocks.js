@@ -1,6 +1,7 @@
 module.exports = (data, state, errors) => {
   const isGrid = data.block === 'grid' && data.mods && data.mods['m-columns'];
   if (!isGrid) return errors;
+  const columnsCount = +data.mods['m-columns'];
   const { content } = data;
   const marketingBlocks = ['commercial, offer'];
   const marketingSize = content.reduce((acc, el) => {
