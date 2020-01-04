@@ -4,7 +4,8 @@ const testData = require('./testData.json');
 const rules = [
   require('./rules/text.several_h1'),
   require('./rules/text.invalid_h2_position'),
-  require('./rules/text.invalid_h3_position')
+  require('./rules/text.invalid_h3_position'),
+  require('./rules/grid.too_much_marketing_blocks')
 ]
 
 
