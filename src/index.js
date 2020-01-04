@@ -1,6 +1,11 @@
 const jsonToAst = require('json-to-ast');
 const testData = require('./testData.json');
-const { getState, getErrors } = require('./rules/text.several_h1');
+
+const rules = [
+  require('./rules/text.several_h1'),
+  require('./rules/text.invalid_h2_position'),
+  require('./rules/text.invalid_h3_position')
+]
 
 
 const iter = (tree, errors, state) => {
@@ -10,8 +15,8 @@ const iter = (tree, errors, state) => {
       return iter(el, acc, state);
     }, errors);
   }
-  getState(tree, state);
-  const newErrors = getErrors(tree, state, errors);
+  //перебираем правила и применяем их для текущей ноды, получаем новый массив ошибок
+  const newErrors = rules.reduce((acc, rule) => rule(tree, state, acc), errors);
   const { content } = tree;
 
   //если детей несколько, перебираем их и запускаем функцию с каждым ребенком
@@ -27,6 +32,7 @@ const iter = (tree, errors, state) => {
   }
   
   //у ноды нет детей, можно возвращать массив ошибок
+  console.log(newErrors)
   return newErrors;
 };
 
