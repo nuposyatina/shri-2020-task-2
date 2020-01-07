@@ -1,6 +1,6 @@
-const findBlocks = (tree, blockName) => {
+const findBlocks = (tree, blockNames) => {
   const iter = (node, acc) => {
-    const newAcc = node.block === blockName && !node.elem ? [ ...acc, node ] : acc;
+    const newAcc = blockNames.includes(node.block) && !node.elem ? [ ...acc, node ] : acc;
     console.log(node, newAcc)
     const { content } = node;
     if (content instanceof Array) {

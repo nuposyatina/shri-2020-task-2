@@ -21,6 +21,7 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
-    "json-to-ast": "^2.1.0"
+    "json-to-ast": "^2.1.0",
+    "parcel-bundler": "^1.12.4"
   }
 }
