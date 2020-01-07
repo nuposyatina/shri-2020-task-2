@@ -32,7 +32,8 @@ module.exports = (data, state, errors) => {
   }
   if (!warningTexts.length) return [ ...errors, hasNoTextSizeError ];
   console.log(warningTexts)
-  const ethalonSize = warningTexts[0] && warningTexts[0].mods && warningTexts[0].mods.size;
+  const ethalonSize = warningTexts[0].mods && warningTexts[0].mods.size;
+  state.warningEthalonSize = ethalonSize;
   if (!ethalonSize) return [ ...errors, hasNoTextSizeError ];
   for (let text of warningTexts) {
     const hasSize = text.mods && text.mods.size;

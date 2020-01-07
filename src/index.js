@@ -11,6 +11,10 @@ const rules = [
 
 
 const iter = (tree, errors, state) => {
+  //чтобы лишний раз не вычислять эталонный размер для одного и того же блока warning
+  if (state.warningEthalonSizeIsChecked) {
+    state.warningEthalonSizeIsChecked = false;
+  }
   //данные могут быть представлены в виде массива
   if (tree instanceof Array) {
     return tree.reduce((acc, el) => {
@@ -40,7 +44,8 @@ const iter = (tree, errors, state) => {
 
 const lint = (data) => {
   const initialState = {
-    h1Count: 0
+    h1Count: 0,
+    warningEthalonSizeIsChecked: false
   }
   return iter(JSON.parse(data), [], initialState);
 };
