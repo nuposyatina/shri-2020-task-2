@@ -1,6 +1,6 @@
 const validPlaceholderSizes = ['s', 'm', 'l'];
 
-module.exports = (data, state, errors) => {
+module.exports = (data, ast, errors) => {
   const isWarning = data.block === 'warning' && !data.elem;
   if (!isWarning) return errors;
   const placeholders = findBlocks(data, ['placeholder']);
@@ -11,6 +11,12 @@ module.exports = (data, state, errors) => {
   }
   return placeholders.reduce((acc, block) => {
     const isValidPlaceholder = block.mods && block.mods.size && validPlaceholderSizes.includes(block.mods.size);
-    return isValidPlaceholder ? acc : [ ...acc, { ...errorInfo, location: '' } ]
+    const err = {
+      ...errorInfo,
+      location: {
+        ...block.location
+      }
+    }
+    return isValidPlaceholder ? acc : [...acc, err]
   }, errors);
 }

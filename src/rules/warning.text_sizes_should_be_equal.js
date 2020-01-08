@@ -1,34 +1,36 @@
-const findBlocks = (tree, blockNames) => {
-  const iter = (node, acc) => {
-    const newAcc = blockNames.includes(node.block) && !node.elem ? [ ...acc, node ] : acc;
-    console.log(node, newAcc)
-    const { content } = node;
-    if (content instanceof Array) {
-      return content.reduce((iAcc, el) => iter(el, iAcc), newAcc);
-    }
-    if (content instanceof Object) {
-      return iter(content, newAcc);
-    }
-    return newAcc;
-  }
-
-  return iter(tree, []);
-}
-
-module.exports = (data, state, errors) => {
+module.exports = (data, ast, errors, state) => {
   const isWarning = data.block === 'warning' && !data.elem;
   if (!isWarning) return errors;
   const warningTexts = findBlocks(data, 'text');
+  const { loc } = ast;
   const hasNoTextSizeError = {
     code: 'WARNING.HAS_NOT_TEXT_SIZE',
     error: 'Размер текста должен быть определен',
-    location: ''
+    location: {
+      start: {
+        column: loc.start.column,
+        line: loc.start.line
+      },
+      end: {
+        column: loc.end.column,
+        line: loc.end.line
+      }
+    }
   };
 
   const textSizesEqualError = {
     code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
     error: 'Все тексты (блоки text) в блоке warning должны быть одного размера',
-    location: ''
+    location: {
+      start: {
+        column: loc.start.column,
+        line: loc.start.line
+      },
+      end: {
+        column: loc.end.column,
+        line: loc.end.line
+      }
+    }
   }
   if (!warningTexts.length) return [ ...errors, hasNoTextSizeError ];
   console.log(warningTexts)

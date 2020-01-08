@@ -1,4 +1,4 @@
-module.exports = (data, state, errors) => {
+module.exports = (data, ast, errors) => {
   const isGrid = data.block === 'grid' && data.mods && data.mods['m-columns'];
   if (!isGrid) return errors;
   const columnsCount = +data.mods['m-columns'];
@@ -12,13 +12,22 @@ module.exports = (data, state, errors) => {
     return acc;
   }, 0);
   if (marketingSize > columnsCount / 2) {
+    const { loc } = ast;
     const err = {
       code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
       error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid.',
-      //TODO: добавить location
-      location: ''
+      location: {
+        start: {
+          column: loc.start.column,
+          line: loc.start.line
+        },
+        end: {
+          column: loc.end.column,
+          line: loc.end.line
+        }
+      }
     }
-    return [ ...errors, err ];
+    return [...errors, err];
   }
   return errors;
 }
