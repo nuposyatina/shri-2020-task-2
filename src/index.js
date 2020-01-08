@@ -1,5 +1,5 @@
 const jsonToAst = require('json-to-ast');
-const testData = require('./testData.json');
+const testData = require('./testData.js');
 
 // const test = `[
 //   {
@@ -9,7 +9,6 @@ const testData = require('./testData.json');
 //     "block": "h1"
 //   }
 // ]`
-// console.log(jsonToAst(test))
 const rules = [
   require('./rules/text.several_h1'),
   // require('./rules/text.invalid_h2_position'),
@@ -58,7 +57,7 @@ const iter = (tree, ast, errors, state) => {
   }
   
   //у ноды нет детей, можно возвращать массив ошибок
-  console.log(newErrors)
+  (newErrors)
   return newErrors;
 };
 

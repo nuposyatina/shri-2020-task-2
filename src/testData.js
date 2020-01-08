@@ -1,4 +1,4 @@
-`{
+module.exports = `{
   "block": "page",
   "mix": [
       {

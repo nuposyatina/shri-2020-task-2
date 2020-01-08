@@ -15,7 +15,6 @@ const findBlocks = (tree, astTree, blockNames) => {
       }
     }
     const newAcc = blockNames.includes(node.block) && !node.elem ? [ ...acc, nodeWithLocation ] : acc;
-    console.log(node, newAcc)
     const { content } = node;
     const astContentProperty = ast.children.find(el => el.key.value === 'content');
 

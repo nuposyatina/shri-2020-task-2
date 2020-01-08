@@ -4,7 +4,6 @@ module.exports = (data, ast, errors, state) => {
     state.h1Count += 1;
   }
   if (isH1 && state.h1Count > 1) {
-    console.log(ast)
     const { loc } = ast;
     const err = {
       code: "TEXT.SEVERAL_H1",
