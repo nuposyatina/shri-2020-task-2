@@ -1,19 +1,10 @@
 const jsonToAst = require('json-to-ast');
 const testData = require('./testData.js');
 
-const {
-  withoutHeaders,
-  withoutH1,
-  withoutH2,
-  h2AfterH1,
-  h2BeforeH1,
-  h2BeforeH1OnDifferentLevels,
-  someH2BeforeH1
-} = require('../mocks/text.invalid_h2_position');
 const rules = [
   require('./rules/text.several_h1'),
   require('./rules/text.invalid_h2_position'),
-  // require('./rules/text.invalid_h3_position'),
+  require('./rules/text.invalid_h3_position'),
   // require('./rules/grid.too_much_marketing_blocks'),
   // require('./rules/warning.text_sizes_should_be_equal')
 ]
@@ -66,13 +57,12 @@ const lint = (data) => {
   const initialState = {
     h1Count: 0,
     warningEthalonSizeIsChecked: false,
-    h2Locations: []
+    h2Locations: [],
+    h3Locations: []
   }
   const ast = jsonToAst(data);
   const tree = JSON.parse(data);
   return iter(tree, ast, [], initialState);
 };
-
-lint(h2BeforeH1);
 
 module.exports = lint;
