@@ -3,7 +3,7 @@ const validPlaceholderSizes = ['s', 'm', 'l'];
 module.exports = (data, ast, errors) => {
   const isWarning = data.block === 'warning' && !data.elem;
   if (!isWarning) return errors;
-  const placeholders = findBlocks(data, ['placeholder']);
+  const placeholders = findBlocks(data, ast, ['placeholder']);
   if (!placeholders.length) return errors;
   const errorInfo = {
     code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
