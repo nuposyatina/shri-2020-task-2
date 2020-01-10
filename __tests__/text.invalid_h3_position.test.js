@@ -103,5 +103,5 @@ describe('Позиция заголовка третьего уровня', () =
     ]
     expect(lint(someH3BeforeH2)).toHaveLength(2);
     expect(lint(someH3BeforeH2)).toEqual(expected);
-  })
-})
+  });
+});

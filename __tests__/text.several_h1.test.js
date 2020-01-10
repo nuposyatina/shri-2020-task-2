@@ -9,7 +9,7 @@ const {
 const ERROR_INFO = {
   code: 'TEXT.SEVERAL_H1',
   error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.'
-}
+};
 
 describe('Количество заголовков первого уровня', () => {
   test('Если нет заголовка, то ошибок не будет', () => {
@@ -71,6 +71,5 @@ describe('Количество заголовков первого уровня'
     ];
     expect(lint(someHeadersOnDifferentLevels)).toHaveLength(2);
     expect(lint(someHeadersOnDifferentLevels)).toEqual(expected);
-  })
-})
-
+  });
+});

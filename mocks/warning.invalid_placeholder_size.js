@@ -148,4 +148,5 @@ module.exports = {
   withCorrectPlaceholder,
   withWrongPlaceholders,
   withWrongPlaceholdersOnDifferentBlocks
-}
+};
+

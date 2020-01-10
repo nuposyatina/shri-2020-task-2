@@ -103,5 +103,5 @@ describe('Позиция заголовка второго уровня', () => 
     ]
     expect(lint(someH2BeforeH1)).toHaveLength(2);
     expect(lint(someH2BeforeH1)).toEqual(expected);
-  })
-})
+  });
+});

@@ -26,7 +26,7 @@ describe('Количество маркетинговых блоков', () => {
   });
 
   test('Если маркетинговых блоков больше половины от количества колоно, то ошибок возникнут ошибки', () => {
-    const expected = {
+    const expected = [{
       ...ERROR_INFO,
       location: {
         start: {
@@ -38,7 +38,7 @@ describe('Количество маркетинговых блоков', () => {
           line: 50
         }
       }
-    }
+    }];
     expect(lint(marketingBlocksMoreThanHalf).toHaveLength(1));
     expect(lint(marketingBlocksMoreThanHalf)).toEqual(expected);
   });
