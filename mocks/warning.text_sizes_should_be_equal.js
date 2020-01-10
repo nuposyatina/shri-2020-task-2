@@ -1,9 +1,43 @@
-const withoutButtons = `{
+const withoutTexts = `{
   "block": "page",
   "content": [
     {
       "block": "warning",
       "content": [
+        {
+          "block": "image",
+        }
+      ]
+    }
+  ]
+}`;
+
+const textWithoutMods = `{
+  "block": "page",
+  "content": [
+    {
+      "block": "warning",
+      "content": [
+        {
+          "block": "text",
+        }
+      ]
+    }
+  ]
+}`;
+
+const withCorrectTextSizes = `{
+  "block": "page",
+  "content": [
+    {
+      "block": "warning",
+      "content": [
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
+        },
         {
           "block": "text",
           "mods": {
@@ -21,7 +55,7 @@ const withoutButtons = `{
   ]
 }`;
 
-const withCorrectButton = `{
+const withCorrectTextSizesInDifferentBlocks = `{
   "block": "page",
   "content": [
     {
@@ -37,88 +71,6 @@ const withCorrectButton = `{
           "block": "text",
           "mods": {
             "size": "s"
-          }
-        },
-        {
-          "block": "button",
-          "mods": {
-            "size": "m"
-          }
-        }
-      ]
-    }
-  ]
-}`;
-
-const withWrongButtons = `{
-  "block": "page",
-  "content": [
-    {
-      "block": "warning",
-      "content": [
-        {
-          "block": "button",
-          "mods": {
-            "size": "s"
-          }
-        },
-        {
-          "block": "text",
-          "mods": {
-            "size": "s"
-          }
-        },
-        {
-          "block": "button",
-          "mods": {
-            "size": "m"
-          }
-        },
-        {
-          "block": "text",
-          "mods": {
-            "size": "s"
-          }
-        },
-        {
-          "block": "button",
-          "mods": {
-            "size": "l"
-          }
-        }
-      ]
-    }
-  ]
-}`;
-
-const withWrongButtonsOnDifferentBlocks = `{
-  "block": "page",
-  "content": [
-    {
-      "block": "warning",
-      "content": [
-        {
-          "block": "text",
-          "mods": {
-            "size": "s"
-          }
-        },
-        {
-          "block": "button",
-          "mods": {
-            "size": "m"
-          }
-        },
-        {
-          "block": "text",
-          "mods": {
-            "size": "s"
-          }
-        },
-        {
-          "block": "button",
-          "mods": {
-            "size": "l"
           }
         },
       ]
@@ -129,11 +81,34 @@ const withWrongButtonsOnDifferentBlocks = `{
         {
           "block": "text",
           "mods": {
-            "size": "s"
+            "size": "l"
           }
         },
         {
-          "block": "button",
+          "block": "text",
+          "mods": {
+            "size": "l"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "l"
+          }
+        }
+      ]
+    }
+  ]
+}`;
+
+const withWrongTextSizes = `{
+  "block": "page",
+  "content": [
+    {
+      "block": "warning",
+      "content": [
+        {
+          "block": "text",
           "mods": {
             "size": "s"
           }
@@ -141,7 +116,30 @@ const withWrongButtonsOnDifferentBlocks = `{
         {
           "block": "text",
           "mods": {
-            "size": "s"
+            "size": "m"
+          }
+        },
+      ]
+    },
+    {
+      "block": "warning",
+      "content": [
+        {
+          "block": "text",
+          "mods": {
+            "size": "m"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "l"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "m"
           }
         }
       ]
@@ -150,8 +148,9 @@ const withWrongButtonsOnDifferentBlocks = `{
 }`;
 
 module.exports = {
-  withoutButtons,
-  withCorrectButton,
-  withWrongButtons,
-  withWrongButtonsOnDifferentBlocks
+  withoutTexts,
+  textWithoutMods,
+  withCorrectTextSizes,
+  withCorrectTextSizesInDifferentBlocks,
+  withWrongTextSizes
 };

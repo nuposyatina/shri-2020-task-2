@@ -1,47 +1,9 @@
-const withoutButtonAndPlaceholder = `{
-  "block": "page",
-  "content": [
-    {
-      "block": "payment",
-      "content": {
-        "block": "text"
-      }
-    },
-    {
-      "block": "warning",
-      "content": [
-        {
-          "block": "text"
-        },
-        {
-          "block": "text"
-        }
-      ]
-    }
-  ]
-}`;
-
-const withoutButton = `{
+const withoutPlaceholders = `{
   "block": "page",
   "content": [
     {
       "block": "warning",
-      "content": {
-        "block": "placeholder",
-        "mods": {
-          "size": "s"
-        }
-      }
-    },
-    {
-      "block": "warning",
       "content": [
-        {
-          "block": "placeholder",
-          "mods": {
-            "size": "m"
-          }
-        },
         {
           "block": "text",
           "mods": {
@@ -53,53 +15,57 @@ const withoutButton = `{
   ]
 }`;
 
-const withoutPlaceholder = `{
+const withCorrectPlaceholder = `{
   "block": "page",
   "content": [
     {
-      "block": "payment",
-      "content": {
-        "block": "payment",
-        "elem": "content"
-      }
-    },
-    {
       "block": "warning",
       "content": [
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
+        },
+        {
+          "block": "placeholder",
+          "mods": {
+            "size": "s"
+          }
+        },
         {
           "block": "button",
           "mods": {
             "size": "m"
           }
-        },
-        {
-          "block": "text",
-          "mods": {
-            "size": "s"
-          }
         }
       ]
     }
   ]
 }`;
 
-const buttonAfterPlaceholder = `{
+const withWrongPlaceholders= `{
   "block": "page",
   "content": [
-    {
-      "block": "payment",
-      "content": {
-        "block": "payment",
-        "elem": "content"
-      }
-    },
     {
       "block": "warning",
       "content": [
         {
           "block": "placeholder",
           "mods": {
-            "size": l
+            "size": "xs"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
+        },
+        {
+          "block": "button",
+          "mods": {
+            "size": "m"
           }
         },
         {
@@ -119,35 +85,57 @@ const buttonAfterPlaceholder = `{
   ]
 }`;
 
-const buttonBeforePlaceholder = `{
+const withWrongPlaceholdersOnDifferentBlocks = `{
   "block": "page",
   "content": [
-    {
-      "block": "payment",
-      "content": {
-        "block": "payment",
-        "elem": "content"
-      }
-    },
     {
       "block": "warning",
       "content": [
         {
-          "block": "button",
-          "mods": {
-            "size": l
-          }
-        },
-        {
           "block": "text",
           "mods": {
-            "size": "m"
+            "size": "s"
           }
         },
         {
           "block": "placeholder",
           "mods": {
+            "size": "xl"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
+        },
+        {
+          "block": "button",
+          "mods": {
             "size": "m"
+          }
+        },
+      ]
+    },
+    {
+      "block": "warning",
+      "content": [
+        {
+          "block": "placeholder",
+          "mods": {
+            "size": "s"
+          }
+        },
+        {
+          "block": "placeholder",
+          "mods": {
+            "size": "xl"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
           }
         }
       ]
@@ -156,9 +144,8 @@ const buttonBeforePlaceholder = `{
 }`;
 
 module.exports = {
-  withoutButtonAndPlaceholder,
-  withoutButton,
-  withoutPlaceholder,
-  buttonAfterPlaceholder,
-  buttonBeforePlaceholder
-};
+  withoutPlaceholders,
+  withCorrectPlaceholder,
+  withWrongPlaceholders,
+  withWrongPlaceholdersOnDifferentBlocks
+}

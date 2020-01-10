@@ -181,7 +181,7 @@ const marketingBlocksMoreThanHalf = `{
         "mix": {
           "block": "offer"
         }
-      },
+      }
     ]
   }
 }`;

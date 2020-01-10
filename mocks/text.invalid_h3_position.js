@@ -178,4 +178,4 @@ module.exports = {
   h3BeforeH2,
   h3BeforeH2OnDifferentLevels,
   someH3BeforeH2
-}
+};

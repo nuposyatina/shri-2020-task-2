@@ -175,4 +175,4 @@ module.exports = {
   h2BeforeH1,
   h2BeforeH1OnDifferentLevels,
   someH2BeforeH1
-}
+};
