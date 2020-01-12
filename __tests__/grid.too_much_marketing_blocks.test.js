@@ -9,20 +9,20 @@ const {
 
 const ERROR_INFO = {
   code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-  error: 'Маркетинговые блоки занимают не больше половины от всех колонок блока grid'
+  error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid'
 };
 
 describe('Количество маркетинговых блоков', () => {
   test('Если маркетинговых блоков нет, то ошибок не будет', () => {
-    expect(lint(withoutMarketingBlocks).toHaveLength(0));
+    expect(lint(withoutMarketingBlocks)).toHaveLength(0);
   });
 
   test('Если маркетинговые блоки занимают меньше половины колонок, то ошибок не будет', () => {
-    expect(lint(withOneMarketingBlock).toHaveLength(0));
+    expect(lint(withOneMarketingBlock)).toHaveLength(0);
   });
 
   test('Если маркетинговых блоков половина от количества колонок, то ошибок не будет', () => {
-    expect(lint(marketingBlocksIsHalf).toHaveLength(0));
+    expect(lint(marketingBlocksIsHalf)).toHaveLength(0);
   });
 
   test('Если маркетинговых блоков больше половины от количества колоно, то ошибок возникнут ошибки', () => {
@@ -39,7 +39,7 @@ describe('Количество маркетинговых блоков', () => {
         }
       }
     }];
-    expect(lint(marketingBlocksMoreThanHalf).toHaveLength(1));
+    expect(lint(marketingBlocksMoreThanHalf)).toHaveLength(1);
     expect(lint(marketingBlocksMoreThanHalf)).toEqual(expected);
   });
 });

@@ -1,7 +1,9 @@
+const { findBlocks, getEthalonSize } = require('../lib');
+
 module.exports = (data, ast, errors, state) => {
   const isWarning = data.block === 'warning' && !data.elem;
   if (!isWarning) return errors;
-  const warningTexts = findBlocks(data, 'text');
+  const warningTexts = findBlocks(data, ast, ['text']);
   const { loc } = ast;
   const hasNoTextSizeError = {
     code: 'WARNING.HAS_NOT_TEXT_SIZE',
@@ -33,7 +35,7 @@ module.exports = (data, ast, errors, state) => {
     }
   }
   if (!warningTexts.length) return [ ...errors, hasNoTextSizeError ];
-  const ethalonSize = warningTexts[0].mods && warningTexts[0].mods.size;
+  const ethalonSize = getEthalonSize(warningTexts);
   state.warningEthalonSize = ethalonSize;
   if (!ethalonSize) return [ ...errors, hasNoTextSizeError ];
   for (let text of warningTexts) {

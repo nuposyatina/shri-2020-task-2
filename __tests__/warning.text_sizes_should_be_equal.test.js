@@ -6,7 +6,7 @@ const {
   withCorrectTextSizes,
   withCorrectTextSizesInDifferentBlocks,
   withWrongTextSizes
-} = require('../mocks/warning.invalid_placeholder_size');
+} = require('../mocks/warning.text_sizes_should_be_equal');
 
 const HAS_NO_TEXT_SIZE_ERROR = {
   code: 'WARNING.HAS_NOT_TEXT_SIZE',

@@ -3,10 +3,10 @@ module.exports = (data, ast, errors) => {
   if (!isGrid) return errors;
   const columnsCount = +data.mods['m-columns'];
   const { content } = data;
-  const marketingBlocks = ['commercial, offer'];
+  const marketingBlocks = ['commercial', 'offer'];
   const marketingSize = content.reduce((acc, el) => {
     const fractionCount = +el.elemMods['m-col'];
-    if (marketingBlocks.includes(el.content[0].block)) {
+    if (marketingBlocks.includes(el.mix.block)) {
       return acc + fractionCount;
     }
     return acc;
@@ -15,7 +15,7 @@ module.exports = (data, ast, errors) => {
     const { loc } = ast;
     const err = {
       code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-      error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid.',
+      error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid',
       location: {
         start: {
           column: loc.start.column,

@@ -2,11 +2,14 @@ const jsonToAst = require('json-to-ast');
 const testData = require('./testData.js');
 
 const rules = [
+  require('./rules/warning.text_sizes_should_be_equal'),
+  require('./rules/warning.invalid_button_size'),
+  require('./rules/warning.invalid_button_position'),
+  require('./rules/warning.invalid_placeholder_size'),
   require('./rules/text.several_h1'),
   require('./rules/text.invalid_h2_position'),
   require('./rules/text.invalid_h3_position'),
-  // require('./rules/grid.too_much_marketing_blocks'),
-  // require('./rules/warning.text_sizes_should_be_equal')
+  require('./rules/grid.too_much_marketing_blocks')
 ]
 
 

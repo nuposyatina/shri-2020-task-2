@@ -29,4 +29,13 @@ const findBlocks = (tree, astTree, blockNames) => {
   }
 
   return iter(tree, astTree, []);
+};
+
+const getEthalonSize = (texts) => {
+  return texts[0].mods && texts[0].mods.size;
 }
+
+module.exports = {
+  findBlocks,
+  getEthalonSize
+};

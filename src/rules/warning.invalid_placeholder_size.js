@@ -1,3 +1,4 @@
+const { findBlocks } = require('../lib');
 const validPlaceholderSizes = ['s', 'm', 'l'];
 
 module.exports = (data, ast, errors) => {

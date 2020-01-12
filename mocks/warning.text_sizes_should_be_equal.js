@@ -72,7 +72,7 @@ const withCorrectTextSizesInDifferentBlocks = `{
           "mods": {
             "size": "s"
           }
-        },
+        }
       ]
     },
     {

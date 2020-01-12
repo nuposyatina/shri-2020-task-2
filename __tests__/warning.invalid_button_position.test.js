@@ -10,7 +10,7 @@ const {
 
 const ERROR_INFO = {
   code: 'WARNING.INVALID_BUTTON_POSITION',
-  error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности.'
+  error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
 };
 
 describe('Позиция блока button', () => {

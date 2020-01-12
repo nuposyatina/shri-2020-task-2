@@ -5,7 +5,7 @@ const {
   withCorrectButton,
   withWrongButtons,
   withWrongButtonsOnDifferentBlocks
-} = require('../mocks/warning.invalid_button_position');
+} = require('../mocks/warning.invalid_button_size');
 
 const ERROR_INFO = {
   code: 'WARNING.INVALID_BUTTON_SIZE',
@@ -61,19 +61,6 @@ describe('Размер блока button', () => {
         location: {
           start: {
             column: 9,
-            line: 7
-          },
-          end: {
-            column: 10,
-            line: 12
-          }
-        }
-      },
-      {
-        ...ERROR_INFO,
-        location: {
-          start: {
-            column: 9,
             line: 25
           },
           end: {
@@ -96,7 +83,7 @@ describe('Размер блока button', () => {
         }
       }
     ];
-    expect(lint(withWrongButtonsOnDifferentBlocks)).toHaveLength(3);
+    expect(lint(withWrongButtonsOnDifferentBlocks)).toHaveLength(2);
     expect(lint(withWrongButtonsOnDifferentBlocks)).toEqual(expected);
   });
 });

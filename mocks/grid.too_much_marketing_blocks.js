@@ -4,7 +4,7 @@ const withoutMarketingBlocks = `{
     "block": "grid",
     "mods": {
       "m-columns": "12"
-    }
+    },
     "content": [
       {
         "block": "grid",
@@ -77,7 +77,7 @@ const withOneMarketingBlock = `{
         "mix": {
           "block": "offer"
         }
-      },
+      }
     ]
   }
 }`;
@@ -129,7 +129,7 @@ const marketingBlocksIsHalf = `{
         "mix": {
           "block": "offer"
         }
-      },
+      }
     ]
   }
 }`;

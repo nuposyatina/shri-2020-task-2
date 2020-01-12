@@ -4,17 +4,26 @@ const withoutButtonAndPlaceholder = `{
     {
       "block": "payment",
       "content": {
-        "block": "text"
+        "block": "text",
+        "mods": {
+          "size": "s"
+        }
       }
     },
     {
       "block": "warning",
       "content": [
         {
-          "block": "text"
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
         },
         {
-          "block": "text"
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
         }
       ]
     }
@@ -26,12 +35,20 @@ const withoutButton = `{
   "content": [
     {
       "block": "warning",
-      "content": {
-        "block": "placeholder",
-        "mods": {
-          "size": "s"
+      "content": [
+        {
+          "block": "placeholder",
+          "mods": {
+            "size": "s"
+          }
+        },
+        {
+          "block": "text",
+          "mods": {
+            "size": "s"
+          }
         }
-      }
+      ]
     },
     {
       "block": "warning",
@@ -99,7 +116,7 @@ const buttonAfterPlaceholder = `{
         {
           "block": "placeholder",
           "mods": {
-            "size": l
+            "size": "l"
           }
         },
         {

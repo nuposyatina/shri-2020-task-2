@@ -1,3 +1,5 @@
+const { findBlocks } = require('../lib');
+
 module.exports = (data, ast, errors) => {
   const isWarning = data.block === 'warning' && !data.elem;
   if (!isWarning) return errors;
