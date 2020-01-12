@@ -1,34 +1,57 @@
-const { findBlocks, getEthalonSize } = require('../lib');
-const sizes = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xxxl'];
+const {
+	findBlocks,
+	getEthalonSize,
+	isCurrentOrMixedBlock,
+	getModsValue
+} = require('../lib');
+
+const SIZES = [
+	'xxs',
+	'xs',
+	's',
+	'm',
+	'l',
+	'xl',
+	'xxl',
+	'xxxl',
+	'xxxl'
+];
+const ERROR_INFO = {
+	code: 'WARNING.INVALID_BUTTON_SIZE', 
+	error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
+};
 
 module.exports = (data, ast, errors, state) => {
-	const isWarning = data.block === 'warning' && !data.elem;
+	const isWarning = isCurrentOrMixedBlock(data, 'warning');
 	if (!isWarning) return errors;
 	const buttons = findBlocks(data, ast, ['button']);
 	if (!buttons.length) return errors;
+
+	//чтобы правила лишний раз не искать эталонный размер для блока, если он найден, но и чтобы правила не зависели друг от друга
 	if (!state.warningEthalonSizeIsChecked) {
 		state.warningEthalonSize = getEthalonSize(findBlocks(data, ast, ['text']));
 		state.warningEthalonSizeIsChecked = true;
 	}
+
+	//если эталонный размер не может быть найден, значит не проводим проверку дальше, этой ошибкой займется правило text_sizes_should_be_equal
 	if (!state.warningEthalonSize && state.warningEthalonSizeIsChecked) return errors;
-	const errorInfo = {
-		code: 'WARNING.INVALID_BUTTON_SIZE', 
-		error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
-	}
-	const ethalonSizeIndex = sizes.findIndex(size => size === state.warningEthalonSize);
+	const ethalonSizeIndex = SIZES.findIndex(size => size === state.warningEthalonSize);
 	if (!ethalonSizeIndex) return errors;
+
 	return buttons.reduce((acc, button) => {
-		const buttonSize = button.mods && button.mods.size;
-		const buttonEthalonSize = sizes[ethalonSizeIndex + 1];
+		const buttonSize = getModsValue(button, 'size');
+		const buttonEthalonSize = SIZES[ethalonSizeIndex + 1];
+
 		if (!buttonSize || buttonSize !== buttonEthalonSize) {
 			const err = {
-				...errorInfo,
+				...ERROR_INFO,
 				location: {
 					...button.location
 				}
 			};
 			return [...acc, err];
 		}
+		
 		return acc;
 	}, errors);
-}
+};

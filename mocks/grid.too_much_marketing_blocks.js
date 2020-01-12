@@ -55,7 +55,7 @@ const withOneMarketingBlock = `{
           "m-col": "2"
         },
         "mix": {
-          "block": "warning"
+          "block": "card"
         }
       },
       {

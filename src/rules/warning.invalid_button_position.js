@@ -1,26 +1,30 @@
-const { findBlocks } = require('../lib');
+const { findBlocks, isCurrentOrMixedBlock } = require('../lib');
+
+const ERROR_INFO = {
+  code: 'WARNING.INVALID_BUTTON_POSITION',
+  error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
+};
 
 module.exports = (data, ast, errors) => {
-  const isWarning = data.block === 'warning' && !data.elem;
+  const isWarning = isCurrentOrMixedBlock(data, 'warning');
   if (!isWarning) return errors;
   const blocks = findBlocks(data, ast, ['button', 'placeholder']);
   if (!blocks.length) return errors;
-  const errorInfo = {
-    code: 'WARNING.INVALID_BUTTON_POSITION',
-    error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
-  }
   let buttonInfo = null;
+
   const newErrors = blocks.reduce((acc, block) => {
-    const isButton = block.block === 'button';
-    const isPlaceholder = block.block === 'placeholder';
+    const isButton = isCurrentOrMixedBlock(block, 'button');
+    const isPlaceholder = isCurrentOrMixedBlock(block, 'placeholder');
+
     if (isButton) {
       buttonInfo = block;
     }
+
     if (isPlaceholder && buttonInfo) {
       const err = {
-        ...errorInfo,
+        ...ERROR_INFO,
         location: buttonInfo.location
-      }
+      };
       return [...acc, err];
     }
 
@@ -28,4 +32,4 @@ module.exports = (data, ast, errors) => {
   }, errors);
 
   return newErrors;
-}
+};
