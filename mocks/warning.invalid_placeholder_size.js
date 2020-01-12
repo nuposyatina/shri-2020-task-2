@@ -44,7 +44,7 @@ const withCorrectPlaceholder = `{
   ]
 }`;
 
-const withWrongPlaceholders= `{
+const withWrongPlaceholders = `{
   "block": "page",
   "content": [
     {
@@ -149,4 +149,3 @@ module.exports = {
   withWrongPlaceholders,
   withWrongPlaceholdersOnDifferentBlocks
 };
-

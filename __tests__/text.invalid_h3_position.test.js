@@ -12,8 +12,9 @@ const {
 const ERROR_INFO = {
   code: 'TEXT.INVALID_H3_POSITION',
   error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'
-}
+};
 
+/* global test expect describe */
 describe('Позиция заголовка третьего уровня', () => {
   test('Если нет заголовков, то ошибок не будет', () => {
     expect(lint(withoutHeaders)).toHaveLength(0);

@@ -12,8 +12,9 @@ const {
 const ERROR_INFO = {
   code: 'TEXT.INVALID_H2_POSITION',
   error: 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности'
-}
+};
 
+/* global test expect describe */
 describe('Позиция заголовка второго уровня', () => {
   test('Если нет заголовков, то ошибок не будет', () => {
     expect(lint(withoutHeaders)).toHaveLength(0);
@@ -102,7 +103,7 @@ describe('Позиция заголовка второго уровня', () => 
         }
       }
     ];
-    
+
     expect(lint(someH2BeforeH1)).toHaveLength(2);
     expect(lint(someH2BeforeH1)).toEqual(expected);
   });

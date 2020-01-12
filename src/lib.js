@@ -18,7 +18,7 @@ const getMixedBlock = (data, blockName) => {
     return mix.find((el) => isCurrentBlock(el, blockName));
   }
 
-  //Если mix представлен в виде строки или объекта
+  // Если mix представлен в виде строки или объекта
   return mix === blockName || mix.block === blockName ? mix : null;
 };
 
@@ -35,9 +35,9 @@ const isMixedBlock = (data, blockName) => !!getMixedBlock(data, blockName);
  * @param {Object} data проверяемый блок
  * @param {String} blockName имя искомого блока
  */
-const isCurrentOrMixedBlock = (data, blockName) => {
-  return isCurrentBlock(data, blockName) || isMixedBlock(data, blockName);
-};
+const isCurrentOrMixedBlock = (data, blockName) => (
+  isCurrentBlock(data, blockName) || isMixedBlock(data, blockName)
+);
 
 /**
  * Получить объект с местоположением блока в JSON
@@ -60,7 +60,7 @@ const getBlockLocation = (blockAst) => {
 /**
  * Найти в блоке дочерние блоки с определенными именами
  * @param {Object} tree блок, в котором ищем дочерние блоки по именам
- * @param {Object} astTree ast-дерево, с помощью которого получаем 
+ * @param {Object} astTree ast-дерево, с помощью которого получаем
  * информацию о положении искомых блоков
  * @param {Array} blockNames массив имен искомых блоков
  */
@@ -70,10 +70,12 @@ const findBlocks = (tree, astTree, blockNames) => {
       ...node,
       location: getBlockLocation(ast)
     };
-    const newAcc = blockNames.find(blockName => isCurrentOrMixedBlock(node, blockName)) ? [ ...acc, nodeWithLocation ] : acc;
+    const newAcc = blockNames.find(
+      (blockName) => isCurrentOrMixedBlock(node, blockName)
+    ) ? [...acc, nodeWithLocation] : acc;
 
     const { content } = node;
-    const astContentProperty = ast.children.find(el => el.key.value === 'content');
+    const astContentProperty = ast.children.find((el) => el.key.value === 'content');
 
     if (astContentProperty && astContentProperty.value.type === 'Array') {
       const { children } = astContentProperty.value;

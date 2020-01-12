@@ -21,50 +21,53 @@ const { isCurrentOrMixedBlock } = require('./lib');
  * @param {Object} state глобальные переменные
  */
 const iter = (tree, ast, errors, state) => {
-  //данные могут быть представлены в виде массива
+  // данные могут быть представлены в виде массива
   if (ast.type === 'Array') {
     const { children } = ast;
-    return tree.reduce((acc, el, index) => {
-      return iter(el, children[index], acc, state);
-    }, errors);
+    return tree.reduce((acc, el, index) => (
+      iter(el, children[index], acc, state)
+    ), errors);
   }
 
   const isWarning = isCurrentOrMixedBlock(tree, 'warning');
-  //чтобы лишний раз не вычислять эталонный размер в разных правилах для одного и того же блока warning
+  // чтобы лишний раз не вычислять эталонный размер в разных правилах
+  // для одного и того же блока warning
   if (isWarning && state.warningEthalonSizeIsChecked) {
     state.warningEthalonSizeIsChecked = false;
   }
-  //перебираем правила и применяем их для текущей ноды, получаем новый массив ошибок
+  // перебираем правила и применяем их для текущей ноды,
+  // получаем новый массив ошибок
   const newErrors = rules.reduce((acc, rule) => rule(tree, ast, acc, state), errors);
   const { content } = tree;
-  const astContentProperty = ast.children.find(el => el.key.value === 'content');
+  const astContentProperty = ast.children.find((el) => el.key.value === 'content');
 
-  //если детей несколько, перебираем их и запускаем функцию с каждым ребенком
-  //Проверяем тип контента у ast-дерева вместо самого дерева, так как instanceof Object для массива тоже дает true
+  // если детей несколько, перебираем их и запускаем функцию с каждым ребенком
+  // Проверяем тип контента у ast-дерева вместо самого дерева,
+  // так как instanceof Object для массива тоже дает true
   if (astContentProperty && astContentProperty.value.type === 'Array') {
     const { children } = astContentProperty.value;
-    return content.reduce((acc, el, index) => {
-      return iter(el, children[index], acc, state);
-    }, newErrors);
+    return content.reduce((acc, el, index) => (
+      iter(el, children[index], acc, state)
+    ), newErrors);
   }
 
-  //если ребенок один, запускаем рекурсивно функцию iter для него
+  // если ребенок один, запускаем рекурсивно функцию iter для него
   if (astContentProperty && astContentProperty.value.type === 'Object') {
     return iter(content, astContentProperty.value, newErrors, state);
   }
-  
-  //если у ноды нет детей, можно возвращать массив ошибок
+
+  // если у ноды нет детей, можно возвращать массив ошибок
   return newErrors;
 };
 
 /**
- * Преобразовать полученные данные в удобные для перебора, 
+ * Преобразовать полученные данные в удобные для перебора,
  * проинициализировать стейт, необходимый для глобальной проверки
  * и запустить функцию проверки с преобразованными данными
  * @param {String} data строка с данными в формате JSON
  */
 const lint = (data) => {
-  //Начальный стейт необходим для "глобальных переменных" всего дерева
+  // Начальный стейт необходим для "глобальных переменных" всего дерева
   const initialState = {
     h1Count: 0,
     warningEthalonSizeIsChecked: false,

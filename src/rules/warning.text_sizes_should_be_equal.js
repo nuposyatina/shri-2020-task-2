@@ -29,9 +29,11 @@ module.exports = (data, ast, errors, state) => {
       location: warningLocation
     };
     return [...errors, err];
-  };
-
-  for (let text of warningTexts) {
+  }
+  // цикл for используется здесь для того, чтобы не перебирать все элементы,
+  // а вернуть ошибку при первом же несоответствии размеров элементов
+  // eslint-disable-next-line no-restricted-syntax
+  for (const text of warningTexts) {
     const textSize = getModsValue(text, 'size');
     if (!textSize || textSize !== ethalonSize) {
       const err = {
@@ -41,6 +43,6 @@ module.exports = (data, ast, errors, state) => {
       return [...errors, err];
     }
   }
-  
+
   return errors;
 };

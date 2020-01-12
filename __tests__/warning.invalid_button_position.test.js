@@ -12,6 +12,7 @@ const ERROR_INFO = {
   error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
 };
 
+/* global test expect describe */
 describe('Позиция блока button', () => {
   test('Если нет блоков button и placeholder, то ошибка не возникнет', () => {
     expect(lint(withoutButtonAndPlaceholder)).toHaveLength(0);

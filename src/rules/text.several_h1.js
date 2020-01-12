@@ -5,8 +5,8 @@ const {
 } = require('../lib');
 
 const ERROR_INFO = {
-  code: "TEXT.SEVERAL_H1",
-  error: "Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным"
+  code: 'TEXT.SEVERAL_H1',
+  error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'
 };
 
 module.exports = (data, ast, errors, state) => {
@@ -23,6 +23,6 @@ module.exports = (data, ast, errors, state) => {
     };
     return [...errors, err];
   }
-  
+
   return errors;
 };

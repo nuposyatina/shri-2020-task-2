@@ -1,5 +1,5 @@
 const lint = require('../src');
-
+/* global test expect */
 test('should works', () => {
   const json = `{
     "block": "warning",
@@ -10,7 +10,7 @@ test('should works', () => {
       { "block": "button", "mods": { "size": "xl" } }
     ]
   }`;
-  
+
   expect(lint(json)).toBeInstanceOf(Array);
   expect(lint(json)).toEqual([]);
 });

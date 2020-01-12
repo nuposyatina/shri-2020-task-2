@@ -15,19 +15,19 @@ module.exports = (data, ast, errors) => {
   const marketingSize = content.reduce((acc, el) => {
     const fractionCount = +getModsValue(el, 'm-col');
     const isMarketing = MARKETING_BLOCKS.find(
-      block => isCurrentOrMixedBlock(el, block)
+      (block) => isCurrentOrMixedBlock(el, block)
     );
     if (isMarketing) {
       return acc + fractionCount;
     }
     return acc;
   }, 0);
-  
+
   if (marketingSize > columnsCount / 2) {
     const err = {
       ...ERROR_INFO,
       location: getBlockLocation(ast)
-    }
+    };
     return [...errors, err];
   }
   return errors;

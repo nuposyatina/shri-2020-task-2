@@ -11,6 +11,7 @@ const ERROR_INFO = {
   error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
 };
 
+/* global test expect describe */
 describe('Размер блока button', () => {
   test('Если нет блоков button, то ошибка не возникнет', () => {
     expect(lint(withoutButtons)).toHaveLength(0);
@@ -83,7 +84,7 @@ describe('Размер блока button', () => {
         }
       }
     ];
-    
+
     expect(lint(withWrongButtonsOnDifferentBlocks)).toHaveLength(2);
     expect(lint(withWrongButtonsOnDifferentBlocks)).toEqual(expected);
   });

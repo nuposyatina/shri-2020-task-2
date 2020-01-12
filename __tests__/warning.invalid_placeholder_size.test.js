@@ -11,6 +11,7 @@ const ERROR_INFO = {
   error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l'
 };
 
+/* global test expect describe */
 describe('Размер блока placeholder', () => {
   test('Если нет блоков placeholder, то ошибка не возникнет', () => {
     expect(lint(withoutPlaceholders)).toHaveLength(0);
@@ -70,7 +71,7 @@ describe('Размер блока placeholder', () => {
         }
       }
     ];
-    
+
     expect(lint(withWrongPlaceholdersOnDifferentBlocks)).toHaveLength(2);
     expect(lint(withWrongPlaceholdersOnDifferentBlocks)).toEqual(expected);
   });

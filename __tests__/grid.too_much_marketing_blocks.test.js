@@ -10,7 +10,7 @@ const ERROR_INFO = {
   code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
   error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid'
 };
-
+/* global test expect describe */
 describe('Количество маркетинговых блоков', () => {
   test('Если маркетинговых блоков нет, то ошибок не будет', () => {
     expect(lint(withoutMarketingBlocks)).toHaveLength(0);
@@ -40,7 +40,7 @@ describe('Количество маркетинговых блоков', () => {
         }
       }
     ];
-    
+
     expect(lint(marketingBlocksMoreThanHalf)).toHaveLength(1);
     expect(lint(marketingBlocksMoreThanHalf)).toEqual(expected);
   });

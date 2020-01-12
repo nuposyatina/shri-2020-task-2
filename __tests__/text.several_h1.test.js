@@ -1,9 +1,9 @@
 const lint = require('../src');
-const { 
-  withoutHeaders, 
-  withOneHeader, 
-  someHeadersOnSameLevel, 
-  someHeadersOnDifferentLevels 
+const {
+  withoutHeaders,
+  withOneHeader,
+  someHeadersOnSameLevel,
+  someHeadersOnDifferentLevels
 } = require('../mocks/text.several_h1');
 
 const ERROR_INFO = {
@@ -11,6 +11,7 @@ const ERROR_INFO = {
   error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'
 };
 
+/* global test expect describe */
 describe('Количество заголовков первого уровня', () => {
   test('Если нет заголовка, то ошибок не будет', () => {
     expect(lint(withoutHeaders)).toHaveLength(0);

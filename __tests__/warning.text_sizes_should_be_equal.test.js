@@ -15,8 +15,9 @@ const HAS_NO_TEXT_SIZE_ERROR = {
 const TEXT_SIZES_EQUALS_ERROR = {
   code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
   error: 'Все тексты (блоки text) в блоке warning должны быть одного размера'
-}
+};
 
+/* global test expect describe */
 describe('Размер текстов в блоке warning', () => {
   test('Если все тексты в блоке одного размера, то ошибка не возникнет', () => {
     expect(lint(withCorrectTextSizes)).toHaveLength(0);
@@ -97,7 +98,7 @@ describe('Размер текстов в блоке warning', () => {
         }
       }
     ];
-    
+
     expect(lint(withWrongTextSizes)).toHaveLength(2);
     expect(lint(withWrongTextSizes)).toEqual(expected);
   });

@@ -15,7 +15,7 @@ module.exports = (data, ast, errors) => {
   if (!isWarning) return errors;
   const placeholders = findBlocks(data, ast, ['placeholder']);
   if (!placeholders.length) return errors;
-  
+
   return placeholders.reduce((acc, block) => {
     const isValidPlaceholder = validPlaceholderSizes.includes(getModsValue(block, 'size'));
     const err = {
@@ -24,7 +24,7 @@ module.exports = (data, ast, errors) => {
         ...block.location
       }
     };
-    
+
     return isValidPlaceholder ? acc : [...acc, err];
   }, errors);
 };

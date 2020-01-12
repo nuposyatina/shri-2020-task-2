@@ -20,14 +20,14 @@ module.exports = (data, ast, errors, state) => {
   }
 
   if (isH1 && state.hasH2) {
-    const h2PositionErrors = state.h2Locations.map(loc => {
-      return {
+    const h2PositionErrors = state.h2Locations.map((loc) => (
+      {
         ...ERROR_INFO,
         location: {
           ...loc
         }
-      } 
-    });
+      }
+    ));
     return [...errors, ...h2PositionErrors];
   }
 
