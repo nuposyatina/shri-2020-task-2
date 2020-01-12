@@ -1,4 +1,4 @@
-const lint = require('../src/index.js');
+const lint = require('../src');
 
 test('should works', () => {
   const json = `{
@@ -10,6 +10,7 @@ test('should works', () => {
       { "block": "button", "mods": { "size": "xl" } }
     ]
   }`;
+  
   expect(lint(json)).toBeInstanceOf(Array);
   expect(lint(json)).toEqual([]);
 });

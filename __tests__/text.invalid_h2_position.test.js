@@ -1,4 +1,4 @@
-const lint = require('../src/index.js');
+const lint = require('../src');
 const {
   withoutHeaders,
   withoutH1,
@@ -11,7 +11,7 @@ const {
 
 const ERROR_INFO = {
   code: 'TEXT.INVALID_H2_POSITION',
-  error: 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности.'
+  error: 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности'
 }
 
 describe('Позиция заголовка второго уровня', () => {
@@ -68,6 +68,7 @@ describe('Позиция заголовка второго уровня', () => 
         }
       }
     ];
+
     expect(lint(h2BeforeH1OnDifferentLevels)).toHaveLength(1);
     expect(lint(h2BeforeH1OnDifferentLevels)).toEqual(expected);
   });
@@ -100,7 +101,8 @@ describe('Позиция заголовка второго уровня', () => 
           }
         }
       }
-    ]
+    ];
+    
     expect(lint(someH2BeforeH1)).toHaveLength(2);
     expect(lint(someH2BeforeH1)).toEqual(expected);
   });

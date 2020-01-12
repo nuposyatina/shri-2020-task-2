@@ -127,7 +127,7 @@ const h2BeforeH1OnDifferentLevels = `{
       "block": "text"
     }
   ]
-}`
+}`;
 
 const someH2BeforeH1 = `{
   "block": "page",

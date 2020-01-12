@@ -7,7 +7,7 @@ module.exports = (data, ast, errors, state) => {
     const { loc } = ast;
     const err = {
       code: "TEXT.SEVERAL_H1",
-      error: "Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.",
+      error: "Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным",
       location: {
         start: {
           column: loc.start.column,

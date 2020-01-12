@@ -1,4 +1,4 @@
-const lint = require('../src/index.js');
+const lint = require('../src');
 const {
   withoutHeaders,
   withoutH2,
@@ -11,7 +11,7 @@ const {
 
 const ERROR_INFO = {
   code: 'TEXT.INVALID_H3_POSITION',
-  error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности.'
+  error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'
 }
 
 describe('Позиция заголовка третьего уровня', () => {
@@ -68,6 +68,7 @@ describe('Позиция заголовка третьего уровня', () =
         }
       }
     ];
+
     expect(lint(h3BeforeH2OnDifferentLevels)).toHaveLength(1);
     expect(lint(h3BeforeH2OnDifferentLevels)).toEqual(expected);
   });
@@ -100,7 +101,8 @@ describe('Позиция заголовка третьего уровня', () =
           }
         }
       }
-    ]
+    ];
+
     expect(lint(someH3BeforeH2)).toHaveLength(2);
     expect(lint(someH3BeforeH2)).toEqual(expected);
   });

@@ -1,5 +1,4 @@
 const lint = require('../src');
-
 const {
   withoutButtons,
   withCorrectButton,
@@ -50,6 +49,7 @@ describe('Размер блока button', () => {
         }
       }
     ];
+
     expect(lint(withWrongButtons)).toHaveLength(2);
     expect(lint(withWrongButtons)).toEqual(expected);
   });
@@ -83,6 +83,7 @@ describe('Размер блока button', () => {
         }
       }
     ];
+    
     expect(lint(withWrongButtonsOnDifferentBlocks)).toHaveLength(2);
     expect(lint(withWrongButtonsOnDifferentBlocks)).toEqual(expected);
   });

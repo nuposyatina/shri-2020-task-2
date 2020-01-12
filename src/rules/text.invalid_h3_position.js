@@ -19,7 +19,7 @@ module.exports = (data, ast, errors, state) => {
   if (isH2 && state.hasH3) {
     const errorInfo = {
       code: 'TEXT.INVALID_H3_POSITION',
-      error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности.'
+      error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'
     };
     const h3PositionErrors = state.h3Locations.map(loc => {
       return {

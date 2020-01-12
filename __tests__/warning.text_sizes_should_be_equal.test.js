@@ -1,5 +1,4 @@
 const lint = require('../src');
-
 const {
   withoutTexts,
   textWithoutMods,
@@ -43,6 +42,7 @@ describe('Размер текстов в блоке warning', () => {
         }
       }
     ];
+
     expect(lint(withoutTexts)).toHaveLength(1);
     expect(lint(withoutTexts)).toEqual(expected);
   });
@@ -63,6 +63,7 @@ describe('Размер текстов в блоке warning', () => {
         }
       }
     ];
+
     expect(lint(textWithoutMods)).toHaveLength(1);
     expect(lint(textWithoutMods)).toEqual(expected);
   });
@@ -96,6 +97,7 @@ describe('Размер текстов в блоке warning', () => {
         }
       }
     ];
+    
     expect(lint(withWrongTextSizes)).toHaveLength(2);
     expect(lint(withWrongTextSizes)).toEqual(expected);
   });

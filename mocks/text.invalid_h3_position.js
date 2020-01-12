@@ -130,7 +130,7 @@ const h3BeforeH2OnDifferentLevels = `{
       "block": "text"
     }
   ]
-}`
+}`;
 
 const someH3BeforeH2 = `{
   "block": "page",

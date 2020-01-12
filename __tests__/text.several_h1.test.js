@@ -1,4 +1,4 @@
-const lint = require('../src/index.js');
+const lint = require('../src');
 const { 
   withoutHeaders, 
   withOneHeader, 
@@ -8,7 +8,7 @@ const {
 
 const ERROR_INFO = {
   code: 'TEXT.SEVERAL_H1',
-  error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным.'
+  error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'
 };
 
 describe('Количество заголовков первого уровня', () => {
@@ -36,6 +36,7 @@ describe('Количество заголовков первого уровня'
         }
       }
     ];
+
     expect(lint(someHeadersOnSameLevel)).toHaveLength(1);
     expect(lint(someHeadersOnSameLevel)).toEqual(expected);
   });
@@ -69,6 +70,7 @@ describe('Количество заголовков первого уровня'
         }
       }
     ];
+
     expect(lint(someHeadersOnDifferentLevels)).toHaveLength(2);
     expect(lint(someHeadersOnDifferentLevels)).toEqual(expected);
   });

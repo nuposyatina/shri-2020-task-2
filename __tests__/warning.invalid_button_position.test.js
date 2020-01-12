@@ -1,5 +1,4 @@
 const lint = require('../src');
-
 const {
   withoutButtonAndPlaceholder,
   withoutButton,
@@ -44,6 +43,7 @@ describe('Позиция блока button', () => {
         }
       }
     }];
+
     expect(lint(buttonBeforePlaceholder)).toHaveLength(1);
     expect(lint(buttonBeforePlaceholder)).toEqual(expected);
   });

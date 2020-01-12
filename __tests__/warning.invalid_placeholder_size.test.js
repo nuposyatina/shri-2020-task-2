@@ -1,5 +1,4 @@
 const lint = require('../src');
-
 const {
   withoutPlaceholders,
   withCorrectPlaceholder,
@@ -9,7 +8,7 @@ const {
 
 const ERROR_INFO = {
   code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
-  error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l.'
+  error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l'
 };
 
 describe('Размер блока placeholder', () => {
@@ -37,6 +36,7 @@ describe('Размер блока placeholder', () => {
         }
       }
     ];
+
     expect(lint(withWrongPlaceholders)).toHaveLength(1);
     expect(lint(withWrongPlaceholders)).toEqual(expected);
   });
@@ -70,6 +70,7 @@ describe('Размер блока placeholder', () => {
         }
       }
     ];
+    
     expect(lint(withWrongPlaceholdersOnDifferentBlocks)).toHaveLength(2);
     expect(lint(withWrongPlaceholdersOnDifferentBlocks)).toEqual(expected);
   });

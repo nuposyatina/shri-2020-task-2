@@ -93,7 +93,7 @@ const someHeadersOnDifferentLevels = `{
       ]
     }
   ]
-}`
+}`;
 
 module.exports = {
   withoutHeaders,

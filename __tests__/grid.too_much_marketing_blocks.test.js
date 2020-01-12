@@ -1,5 +1,4 @@
-const lint = require('../src/index.js');
-
+const lint = require('../src');
 const {
   withoutMarketingBlocks,
   withOneMarketingBlock,
@@ -26,19 +25,22 @@ describe('Количество маркетинговых блоков', () => {
   });
 
   test('Если маркетинговых блоков больше половины от количества колоно, то ошибок возникнут ошибки', () => {
-    const expected = [{
-      ...ERROR_INFO,
-      location: {
-        start: {
-          column: 14,
-          line: 3
-        },
-        end: {
-          column: 4,
-          line: 50
+    const expected = [
+      {
+        ...ERROR_INFO,
+        location: {
+          start: {
+            column: 14,
+            line: 3
+          },
+          end: {
+            column: 4,
+            line: 50
+          }
         }
       }
-    }];
+    ];
+    
     expect(lint(marketingBlocksMoreThanHalf)).toHaveLength(1);
     expect(lint(marketingBlocksMoreThanHalf)).toEqual(expected);
   });
