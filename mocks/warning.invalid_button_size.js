@@ -120,7 +120,7 @@ const withWrongButtonsOnDifferentBlocks = `{
           "mods": {
             "size": "l"
           }
-        },
+        }
       ]
     },
     {

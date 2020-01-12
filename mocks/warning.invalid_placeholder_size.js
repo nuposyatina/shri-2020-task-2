@@ -114,7 +114,7 @@ const withWrongPlaceholdersOnDifferentBlocks = `{
           "mods": {
             "size": "m"
           }
-        },
+        }
       ]
     },
     {

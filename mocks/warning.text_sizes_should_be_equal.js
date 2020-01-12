@@ -5,7 +5,7 @@ const withoutTexts = `{
       "block": "warning",
       "content": [
         {
-          "block": "image",
+          "block": "image"
         }
       ]
     }
@@ -19,7 +19,7 @@ const textWithoutMods = `{
       "block": "warning",
       "content": [
         {
-          "block": "text",
+          "block": "text"
         }
       ]
     }
@@ -118,7 +118,7 @@ const withWrongTextSizes = `{
           "mods": {
             "size": "m"
           }
-        },
+        }
       ]
     },
     {

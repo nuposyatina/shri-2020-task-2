@@ -135,7 +135,7 @@ const buttonBeforePlaceholder = `{
         {
           "block": "button",
           "mods": {
-            "size": l
+            "size": "l"
           }
         },
         {
