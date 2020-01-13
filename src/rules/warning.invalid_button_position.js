@@ -1,9 +1,5 @@
 const { findBlocks, isCurrentOrMixedBlock } = require('../lib');
-
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_BUTTON_POSITION',
-  error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
-};
+const { WARNING } = require('../errors');
 
 module.exports = (data, ast, errors) => {
   const isWarning = isCurrentOrMixedBlock(data, 'warning');
@@ -22,7 +18,7 @@ module.exports = (data, ast, errors) => {
 
     if (isPlaceholder && buttonInfo) {
       const err = {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_POSITION,
         location: buttonInfo.location
       };
       return [...acc, err];

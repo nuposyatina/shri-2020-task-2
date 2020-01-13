@@ -3,11 +3,7 @@ const {
   getModsValue,
   getBlockLocation
 } = require('../lib');
-
-const ERROR_INFO = {
-  code: 'TEXT.INVALID_H2_POSITION',
-  error: 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности'
-};
+const { TEXT } = require('../errors');
 
 module.exports = (data, ast, errors, state) => {
   const isH2 = isCurrentOrMixedBlock(data, 'text') && getModsValue(data, 'type') === 'h2';
@@ -22,7 +18,7 @@ module.exports = (data, ast, errors, state) => {
   if (isH1 && state.hasH2) {
     const h2PositionErrors = state.h2Locations.map((loc) => (
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H2_POSITION,
         location: {
           ...loc
         }

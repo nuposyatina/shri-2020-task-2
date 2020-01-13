@@ -5,6 +5,10 @@
  */
 const isCurrentBlock = (data, blockName) => data.block === blockName && !data.elem;
 
+const checkMix = (mix, blockName) => (
+  mix === blockName || mix.block === blockName ? mix : null
+);
+
 /**
  * Получить примиксованную сущность с нужным именем, если она есть
  * @param {Object} data проверяемый блок
@@ -19,7 +23,7 @@ const getMixedBlock = (data, blockName) => {
   }
 
   // Если mix представлен в виде строки или объекта
-  return mix === blockName || mix.block === blockName ? mix : null;
+  return checkMix(mix, blockName);
 };
 
 /**
@@ -44,21 +48,33 @@ const isCurrentOrMixedBlock = (data, blockName) => (
  * @param {Object} blockAst ast-дерево проверяемого блока
  */
 const getBlockLocation = (blockAst) => {
-  const { loc } = blockAst;
+  const { start, end } = blockAst.loc;
   return {
     start: {
-      column: loc.start.column,
-      line: loc.start.line
+      column: start.column,
+      line: start.line
     },
     end: {
-      column: loc.end.column,
-      line: loc.end.line
+      column: end.column,
+      line: end.line
     }
   };
 };
 
+const iterateChildren = (f, iterable, ast, acc, params = []) => (
+  iterable.reduce((iAcc, el, index) => f(el, ast[index], iAcc, ...params), acc)
+);
+
+const checkNodeName = (names, node) => (
+  names.find((name) => isCurrentOrMixedBlock(node, name))
+);
+
+const checkAstType = (property, type) => (
+  property && property.value.type === type
+);
+
 /**
- * Найти в блоке дочерние блоки с определенными именами
+ * Найти в блоке дочерние блоки с определенными именами на любом уровне вложенности
  * @param {Object} tree блок, в котором ищем дочерние блоки по именам
  * @param {Object} astTree ast-дерево, с помощью которого получаем
  * информацию о положении искомых блоков
@@ -70,19 +86,17 @@ const findBlocks = (tree, astTree, blockNames) => {
       ...node,
       location: getBlockLocation(ast)
     };
-    const newAcc = blockNames.find(
-      (blockName) => isCurrentOrMixedBlock(node, blockName)
-    ) ? [...acc, nodeWithLocation] : acc;
+    const newAcc = checkNodeName(blockNames, node) ? [...acc, nodeWithLocation] : acc;
 
     const { content } = node;
     const astContentProperty = ast.children.find((el) => el.key.value === 'content');
 
-    if (astContentProperty && astContentProperty.value.type === 'Array') {
+    if (checkAstType(astContentProperty, 'Array')) {
       const { children } = astContentProperty.value;
-      return content.reduce((iAcc, el, index) => iter(el, children[index], iAcc), newAcc);
+      return iterateChildren(iter, content, children, newAcc);
     }
 
-    if (astContentProperty && astContentProperty.value.type === 'Object') {
+    if (checkAstType(astContentProperty, 'Object')) {
       return iter(content, astContentProperty.value, newAcc);
     }
 
@@ -116,10 +130,22 @@ const getEthalonSize = (texts) => {
   return getModsValue(texts[0], 'size');
 };
 
+const checkWarningSize = (data, state) => {
+  const isWarning = isCurrentOrMixedBlock(data, 'warning');
+  // чтобы лишний раз не вычислять эталонный размер в разных правилах
+  // для одного и того же блока warning
+  if (isWarning && state.warningEthalonSizeIsChecked) {
+    state.warningEthalonSizeIsChecked = false;
+  }
+};
+
 module.exports = {
   findBlocks,
   getEthalonSize,
   isCurrentOrMixedBlock,
   getModsValue,
-  getBlockLocation
+  getBlockLocation,
+  checkWarningSize,
+  iterateChildren,
+  checkAstType
 };

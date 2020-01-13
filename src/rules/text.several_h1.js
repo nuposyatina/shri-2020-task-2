@@ -3,11 +3,7 @@ const {
   getModsValue,
   getBlockLocation
 } = require('../lib');
-
-const ERROR_INFO = {
-  code: 'TEXT.SEVERAL_H1',
-  error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'
-};
+const { TEXT } = require('../errors');
 
 module.exports = (data, ast, errors, state) => {
   const isH1 = isCurrentOrMixedBlock(data, 'text') && getModsValue(data, 'type') === 'h1';
@@ -18,7 +14,7 @@ module.exports = (data, ast, errors, state) => {
 
   if (isH1 && state.h1Count > 1) {
     const err = {
-      ...ERROR_INFO,
+      ...TEXT.SEVERAL_H1,
       location: getBlockLocation(ast)
     };
     return [...errors, err];

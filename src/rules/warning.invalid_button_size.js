@@ -4,6 +4,7 @@ const {
   isCurrentOrMixedBlock,
   getModsValue
 } = require('../lib');
+const { WARNING } = require('../errors');
 
 const SIZES = [
   'xxs',
@@ -16,10 +17,6 @@ const SIZES = [
   'xxxl',
   'xxxl'
 ];
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_BUTTON_SIZE',
-  error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
-};
 
 module.exports = (data, ast, errors, state) => {
   const isWarning = isCurrentOrMixedBlock(data, 'warning');
@@ -46,7 +43,7 @@ module.exports = (data, ast, errors, state) => {
 
     if (!buttonSize || buttonSize !== buttonEthalonSize) {
       const err = {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_SIZE,
         location: {
           ...button.location
         }

@@ -1,4 +1,6 @@
 const jsonToAst = require('json-to-ast');
+const { checkWarningSize, iterateChildren, checkAstType } = require('./lib');
+
 const rules = [
   require('./rules/warning.text_sizes_should_be_equal'),
   require('./rules/warning.invalid_button_size'),
@@ -9,32 +11,24 @@ const rules = [
   require('./rules/text.invalid_h3_position'),
   require('./rules/grid.too_much_marketing_blocks')
 ];
-const { isCurrentOrMixedBlock } = require('./lib');
 
 /**
  * Проверить текущий блок на соответствие правилам,
- * запустить проверку для дочерних блоков,
- * если их нет, вернуть полученный массив ошибок
- * @param {Object} tree объект с данными
- * @param {Object} ast ast-дерево, сформированное из объекта
- * @param {Array} errors массив ошибок, по умолчанию пустой
- * @param {Object} state глобальные переменные
+ * Функция также рекурсивно проверяет дочерние блоки,
+ * когда все дочерние блоки проверены вернет массив ошибок или пустой массив.
+ * @param {Object|Array} tree объект с блоками интерфейса
+ * @param {Object} ast ast-дерево, сформированное из объекта с блоками интерфейса
+ * @param {Array} errors массив ошибок
+ * @param {Object} state состояние, необходимое для разных проверок
  */
 const iter = (tree, ast, errors, state) => {
   // данные могут быть представлены в виде массива
   if (ast.type === 'Array') {
     const { children } = ast;
-    return tree.reduce((acc, el, index) => (
-      iter(el, children[index], acc, state)
-    ), errors);
+    return iterateChildren(iter, tree, children, errors, [state]);
   }
-
-  const isWarning = isCurrentOrMixedBlock(tree, 'warning');
-  // чтобы лишний раз не вычислять эталонный размер в разных правилах
-  // для одного и того же блока warning
-  if (isWarning && state.warningEthalonSizeIsChecked) {
-    state.warningEthalonSizeIsChecked = false;
-  }
+  // обнуляем значение проверки эталонного размера для разных блоков warning
+  checkWarningSize(tree, state);
   // перебираем правила и применяем их для текущей ноды,
   // получаем новый массив ошибок
   const newErrors = rules.reduce((acc, rule) => rule(tree, ast, acc, state), errors);
@@ -44,15 +38,13 @@ const iter = (tree, ast, errors, state) => {
   // если детей несколько, перебираем их и запускаем функцию с каждым ребенком
   // Проверяем тип контента у ast-дерева вместо самого дерева,
   // так как instanceof Object для массива тоже дает true
-  if (astContentProperty && astContentProperty.value.type === 'Array') {
+  if (checkAstType(astContentProperty, 'Array')) {
     const { children } = astContentProperty.value;
-    return content.reduce((acc, el, index) => (
-      iter(el, children[index], acc, state)
-    ), newErrors);
+    return iterateChildren(iter, content, children, newErrors, [state]);
   }
 
   // если ребенок один, запускаем рекурсивно функцию iter для него
-  if (astContentProperty && astContentProperty.value.type === 'Object') {
+  if (checkAstType(astContentProperty, 'Object')) {
     return iter(content, astContentProperty.value, newErrors, state);
   }
 
@@ -61,9 +53,10 @@ const iter = (tree, ast, errors, state) => {
 };
 
 /**
- * Преобразовать полученные данные в удобные для перебора,
- * проинициализировать стейт, необходимый для глобальной проверки
- * и запустить функцию проверки с преобразованными данными
+ * Проверить БЭМ дерево
+ * Функция преобразует полученные данные в удобные для перебора,
+ * инициализирует состояние и рекурсивно проверяет БЭМ дерево
+ * на соответсвие правилам
  * @param {String} data строка с данными в формате JSON
  */
 const lint = (data) => {

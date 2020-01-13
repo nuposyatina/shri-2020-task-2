@@ -1,10 +1,7 @@
 const { isCurrentOrMixedBlock, getModsValue, getBlockLocation } = require('../lib');
+const { GRID } = require('../errors');
 
 const MARKETING_BLOCKS = ['commercial', 'offer'];
-const ERROR_INFO = {
-  code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-  error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid'
-};
 
 module.exports = (data, ast, errors) => {
   const isGrid = isCurrentOrMixedBlock(data, 'grid');
@@ -25,7 +22,7 @@ module.exports = (data, ast, errors) => {
 
   if (marketingSize > columnsCount / 2) {
     const err = {
-      ...ERROR_INFO,
+      ...GRID.TOO_MUCH_MARKETING_BLOCKS,
       location: getBlockLocation(ast)
     };
     return [...errors, err];

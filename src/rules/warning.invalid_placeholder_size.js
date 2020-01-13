@@ -3,12 +3,9 @@ const {
   isCurrentOrMixedBlock,
   getModsValue
 } = require('../lib');
+const { WARNING } = require('../errors');
 
 const validPlaceholderSizes = ['s', 'm', 'l'];
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
-  error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l'
-};
 
 module.exports = (data, ast, errors) => {
   const isWarning = isCurrentOrMixedBlock(data, 'warning');
@@ -19,7 +16,7 @@ module.exports = (data, ast, errors) => {
   return placeholders.reduce((acc, block) => {
     const isValidPlaceholder = validPlaceholderSizes.includes(getModsValue(block, 'size'));
     const err = {
-      ...ERROR_INFO,
+      ...WARNING.INVALID_PLACEHOLDER_SIZE,
       location: {
         ...block.location
       }

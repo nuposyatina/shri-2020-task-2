@@ -3,11 +3,7 @@ const {
   getModsValue,
   getBlockLocation
 } = require('../lib');
-
-const ERROR_INFO = {
-  code: 'TEXT.INVALID_H3_POSITION',
-  error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'
-};
+const { TEXT } = require('../errors');
 
 module.exports = (data, ast, errors, state) => {
   const isH2 = isCurrentOrMixedBlock(data, 'text') && getModsValue(data, 'type') === 'h2';
@@ -22,7 +18,7 @@ module.exports = (data, ast, errors, state) => {
   if (isH2 && state.hasH3) {
     const h3PositionErrors = state.h3Locations.map((loc) => (
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H3_POSITION,
         location: {
           ...loc
         }

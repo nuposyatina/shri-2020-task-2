@@ -5,15 +5,7 @@ const {
   getBlockLocation,
   getModsValue
 } = require('../lib');
-
-const HAS_NOT_TEXT_SIZE_ERROR = {
-  code: 'WARNING.HAS_NOT_TEXT_SIZE',
-  error: 'Размер текста должен быть определен'
-};
-const TEXT_SIZES_EQUALS_ERROR = {
-  code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
-  error: 'Все тексты (блоки text) в блоке warning должны быть одного размера'
-};
+const { WARNING } = require('../errors');
 
 module.exports = (data, ast, errors, state) => {
   const isWarning = isCurrentOrMixedBlock(data, 'warning');
@@ -25,7 +17,7 @@ module.exports = (data, ast, errors, state) => {
 
   if (!ethalonSize) {
     const err = {
-      ...HAS_NOT_TEXT_SIZE_ERROR,
+      ...WARNING.HAS_NOT_TEXT_SIZE,
       location: warningLocation
     };
     return [...errors, err];
@@ -37,7 +29,7 @@ module.exports = (data, ast, errors, state) => {
     const textSize = getModsValue(text, 'size');
     if (!textSize || textSize !== ethalonSize) {
       const err = {
-        ...TEXT_SIZES_EQUALS_ERROR,
+        ...WARNING.TEXT_SIZES_SHOULD_BE_EQUAL,
         location: warningLocation
       };
       return [...errors, err];
