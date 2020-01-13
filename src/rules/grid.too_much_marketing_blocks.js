@@ -1,4 +1,9 @@
-const { isCurrentOrMixedBlock, getModsValue, getBlockLocation } = require('../lib');
+const {
+  isCurrentOrMixedBlock,
+  getModsValue,
+  getBlockLocation,
+  getFractionCount
+} = require('../lib');
 const { GRID } = require('../errors');
 
 const MARKETING_BLOCKS = ['commercial', 'offer'];
@@ -8,17 +13,7 @@ module.exports = (data, ast, errors) => {
   if (!isGrid) return errors;
   const columnsCount = +getModsValue(data, 'm-columns');
   const { content } = data;
-
-  const marketingSize = content.reduce((acc, el) => {
-    const fractionCount = +getModsValue(el, 'm-col');
-    const isMarketing = MARKETING_BLOCKS.find(
-      (block) => isCurrentOrMixedBlock(el, block)
-    );
-    if (isMarketing) {
-      return acc + fractionCount;
-    }
-    return acc;
-  }, 0);
+  const marketingSize = getFractionCount(content, MARKETING_BLOCKS);
 
   if (marketingSize > columnsCount / 2) {
     const err = {

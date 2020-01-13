@@ -8,11 +8,7 @@ const {
   h2BeforeH1OnDifferentLevels,
   someH2BeforeH1
 } = require('../mocks/text.invalid_h2_position');
-
-const ERROR_INFO = {
-  code: 'TEXT.INVALID_H2_POSITION',
-  error: 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности'
-};
+const { TEXT } = require('../src/errors');
 
 /* global test expect describe */
 describe('Позиция заголовка второго уровня', () => {
@@ -35,7 +31,7 @@ describe('Позиция заголовка второго уровня', () => 
   test('Если заголовок 2 уровня идет перед заголовком 1 уровня на одном уровне вложенности, то будет ошибка', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H2_POSITION,
         location: {
           start: {
             column: 5,
@@ -56,7 +52,7 @@ describe('Позиция заголовка второго уровня', () => 
   test('Если заголовок 2 уровня идет перед заголовком 1 уровня на разных уровнях вложенности, то будет ошибка', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H2_POSITION,
         location: {
           start: {
             column: 18,
@@ -77,7 +73,7 @@ describe('Позиция заголовка второго уровня', () => 
   test('Если несколько заголовков 2 уровня идут перед заголовком 1 уровня, то будет несколько ошибок', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H2_POSITION,
         location: {
           start: {
             column: 18,
@@ -90,7 +86,7 @@ describe('Позиция заголовка второго уровня', () => 
         }
       },
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H2_POSITION,
         location: {
           start: {
             column: 11,

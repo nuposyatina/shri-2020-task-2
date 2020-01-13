@@ -63,9 +63,7 @@ const lint = (data) => {
   // Начальный стейт необходим для "глобальных переменных" всего дерева
   const initialState = {
     h1Count: 0,
-    warningEthalonSizeIsChecked: false,
-    h2Locations: [],
-    h3Locations: []
+    warningEthalonSizeIsChecked: false
   };
   const ast = jsonToAst(data);
   const tree = JSON.parse(data);

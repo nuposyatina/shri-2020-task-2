@@ -5,11 +5,8 @@ const {
   marketingBlocksIsHalf,
   marketingBlocksMoreThanHalf
 } = require('../mocks/grid.too_much_marketing_blocks');
+const { GRID } = require('../src/errors');
 
-const ERROR_INFO = {
-  code: 'GRID.TOO_MUCH_MARKETING_BLOCKS',
-  error: 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid'
-};
 /* global test expect describe */
 describe('Количество маркетинговых блоков', () => {
   test('Если маркетинговых блоков нет, то ошибок не будет', () => {
@@ -27,7 +24,7 @@ describe('Количество маркетинговых блоков', () => {
   test('Если маркетинговых блоков больше половины от количества колоно, то ошибок возникнут ошибки', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...GRID.TOO_MUCH_MARKETING_BLOCKS,
         location: {
           start: {
             column: 14,

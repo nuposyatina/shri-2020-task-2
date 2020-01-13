@@ -37,7 +37,7 @@ const WARNING = {
     code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
     error: 'Все тексты (блоки text) в блоке warning должны быть одного размера'
   },
-  HAS_NO_TEXT_SIZE: {
+  HAS_NOT_TEXT_SIZE: {
     code: 'WARNING.HAS_NOT_TEXT_SIZE',
     error: 'Размер текста должен быть определен'
   }

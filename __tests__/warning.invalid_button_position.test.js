@@ -6,11 +6,7 @@ const {
   buttonAfterPlaceholder,
   buttonBeforePlaceholder
 } = require('../mocks/warning.invalid_button_position');
-
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_BUTTON_POSITION',
-  error: 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'
-};
+const { WARNING } = require('../src/errors');
 
 /* global test expect describe */
 describe('Позиция блока button', () => {
@@ -32,7 +28,7 @@ describe('Позиция блока button', () => {
 
   test('Если блок button находится перед блоком placeholder, то возникнет ошибка', () => {
     const expected = [{
-      ...ERROR_INFO,
+      ...WARNING.INVALID_BUTTON_POSITION,
       location: {
         start: {
           column: 9,

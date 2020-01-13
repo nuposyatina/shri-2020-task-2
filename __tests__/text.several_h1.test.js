@@ -5,11 +5,7 @@ const {
   someHeadersOnSameLevel,
   someHeadersOnDifferentLevels
 } = require('../mocks/text.several_h1');
-
-const ERROR_INFO = {
-  code: 'TEXT.SEVERAL_H1',
-  error: 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'
-};
+const { TEXT } = require('../src/errors');
 
 /* global test expect describe */
 describe('Количество заголовков первого уровня', () => {
@@ -24,7 +20,7 @@ describe('Количество заголовков первого уровня'
   test('Если на одном уровне больше одного заголовка, то будет ошибка', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.SEVERAL_H1,
         location: {
           start: {
             column: 5,
@@ -45,7 +41,7 @@ describe('Количество заголовков первого уровня'
   test('Если есть несколько заголовков на разных уровнях вложенности, то будет несколько ошибок', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.SEVERAL_H1,
         location: {
           start: {
             column: 13,
@@ -58,7 +54,7 @@ describe('Количество заголовков первого уровня'
         }
       },
       {
-        ...ERROR_INFO,
+        ...TEXT.SEVERAL_H1,
         location: {
           start: {
             column: 22,

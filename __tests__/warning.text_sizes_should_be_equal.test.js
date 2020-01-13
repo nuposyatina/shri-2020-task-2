@@ -6,16 +6,7 @@ const {
   withCorrectTextSizesInDifferentBlocks,
   withWrongTextSizes
 } = require('../mocks/warning.text_sizes_should_be_equal');
-
-const HAS_NO_TEXT_SIZE_ERROR = {
-  code: 'WARNING.HAS_NOT_TEXT_SIZE',
-  error: 'Размер текста должен быть определен'
-};
-
-const TEXT_SIZES_EQUALS_ERROR = {
-  code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL',
-  error: 'Все тексты (блоки text) в блоке warning должны быть одного размера'
-};
+const { WARNING } = require('../src/errors');
 
 /* global test expect describe */
 describe('Размер текстов в блоке warning', () => {
@@ -30,7 +21,7 @@ describe('Размер текстов в блоке warning', () => {
   test('Если текстов в блоке нет, то возникнет ошибка, так как эталонный размер должен быть определен', () => {
     const expected = [
       {
-        ...HAS_NO_TEXT_SIZE_ERROR,
+        ...WARNING.HAS_NOT_TEXT_SIZE,
         location: {
           start: {
             column: 5,
@@ -51,7 +42,7 @@ describe('Размер текстов в блоке warning', () => {
   test('Если эталонный блок text не имеет модификатора size, то возникнут ошибки', () => {
     const expected = [
       {
-        ...HAS_NO_TEXT_SIZE_ERROR,
+        ...WARNING.HAS_NOT_TEXT_SIZE,
         location: {
           start: {
             column: 5,
@@ -72,7 +63,7 @@ describe('Размер текстов в блоке warning', () => {
   test('Если размер блоков text не соответствует эталонному, то возникнут ошибки', () => {
     const expected = [
       {
-        ...TEXT_SIZES_EQUALS_ERROR,
+        ...WARNING.TEXT_SIZES_SHOULD_BE_EQUAL,
         location: {
           start: {
             column: 5,
@@ -85,7 +76,7 @@ describe('Размер текстов в блоке warning', () => {
         }
       },
       {
-        ...TEXT_SIZES_EQUALS_ERROR,
+        ...WARNING.TEXT_SIZES_SHOULD_BE_EQUAL,
         location: {
           start: {
             column: 5,

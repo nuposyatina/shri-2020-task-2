@@ -5,11 +5,7 @@ const {
   withWrongPlaceholders,
   withWrongPlaceholdersOnDifferentBlocks
 } = require('../mocks/warning.invalid_placeholder_size');
-
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_PLACEHOLDER_SIZE',
-  error: 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l'
-};
+const { WARNING } = require('../src/errors');
 
 /* global test expect describe */
 describe('Размер блока placeholder', () => {
@@ -24,7 +20,7 @@ describe('Размер блока placeholder', () => {
   test('Если есть блоки placeholder с неправильным размером, то возникнут ошибки', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_PLACEHOLDER_SIZE,
         location: {
           start: {
             column: 9,
@@ -45,7 +41,7 @@ describe('Размер блока placeholder', () => {
   test('Если есть блоки placeholder с неправильным размером на разных уровнях вложенности, то возникнут ошибки', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_PLACEHOLDER_SIZE,
         location: {
           start: {
             column: 9,
@@ -58,7 +54,7 @@ describe('Размер блока placeholder', () => {
         }
       },
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_PLACEHOLDER_SIZE,
         location: {
           start: {
             column: 9,

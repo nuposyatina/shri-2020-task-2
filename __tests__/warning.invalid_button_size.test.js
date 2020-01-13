@@ -5,11 +5,7 @@ const {
   withWrongButtons,
   withWrongButtonsOnDifferentBlocks
 } = require('../mocks/warning.invalid_button_size');
-
-const ERROR_INFO = {
-  code: 'WARNING.INVALID_BUTTON_SIZE',
-  error: 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
-};
+const { WARNING } = require('../src/errors');
 
 /* global test expect describe */
 describe('Размер блока button', () => {
@@ -24,7 +20,7 @@ describe('Размер блока button', () => {
   test('Если есть кнопки с неправильным размером, то возникнут ошибки', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_SIZE,
         location: {
           start: {
             column: 9,
@@ -37,7 +33,7 @@ describe('Размер блока button', () => {
         }
       },
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_SIZE,
         location: {
           start: {
             column: 9,
@@ -58,7 +54,7 @@ describe('Размер блока button', () => {
   test('Если есть кнопки с неправильным размером на разных уровнях вложенности, то возникнут ошибки', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_SIZE,
         location: {
           start: {
             column: 9,
@@ -71,7 +67,7 @@ describe('Размер блока button', () => {
         }
       },
       {
-        ...ERROR_INFO,
+        ...WARNING.INVALID_BUTTON_SIZE,
         location: {
           start: {
             column: 9,

@@ -139,6 +139,23 @@ const checkWarningSize = (data, state) => {
   }
 };
 
+const getFractionCount = (content, targetBlockNames) => (
+  content.reduce((acc, el) => {
+    const fractionCount = +getModsValue(el, 'm-col');
+    const isMarketing = targetBlockNames.find(
+      (block) => isCurrentOrMixedBlock(el, block)
+    );
+    if (isMarketing) {
+      return acc + fractionCount;
+    }
+    return acc;
+  }, 0)
+);
+
+const isHeader = (data, type) => (
+  isCurrentOrMixedBlock(data, 'text') && getModsValue(data, 'type') === type
+);
+
 module.exports = {
   findBlocks,
   getEthalonSize,
@@ -147,5 +164,7 @@ module.exports = {
   getBlockLocation,
   checkWarningSize,
   iterateChildren,
-  checkAstType
+  checkAstType,
+  getFractionCount,
+  isHeader
 };

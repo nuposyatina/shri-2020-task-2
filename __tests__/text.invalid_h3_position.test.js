@@ -8,11 +8,7 @@ const {
   h3BeforeH2OnDifferentLevels,
   someH3BeforeH2
 } = require('../mocks/text.invalid_h3_position');
-
-const ERROR_INFO = {
-  code: 'TEXT.INVALID_H3_POSITION',
-  error: 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'
-};
+const { TEXT } = require('../src/errors');
 
 /* global test expect describe */
 describe('Позиция заголовка третьего уровня', () => {
@@ -35,7 +31,7 @@ describe('Позиция заголовка третьего уровня', () =
   test('Если заголовок 3 уровня идет перед заголовком 2 уровня на одном уровне вложенности, то будет ошибка', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H3_POSITION,
         location: {
           start: {
             column: 5,
@@ -56,7 +52,7 @@ describe('Позиция заголовка третьего уровня', () =
   test('Если заголовок 3 уровня идет перед заголовком 2 уровня на разных уровнях вложенности, то будет ошибка', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H3_POSITION,
         location: {
           start: {
             column: 18,
@@ -77,7 +73,7 @@ describe('Позиция заголовка третьего уровня', () =
   test('Если несколько заголовков 3 уровня идут перед заголовком 2 уровня, то будет несколько ошибок', () => {
     const expected = [
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H3_POSITION,
         location: {
           start: {
             column: 18,
@@ -90,7 +86,7 @@ describe('Позиция заголовка третьего уровня', () =
         }
       },
       {
-        ...ERROR_INFO,
+        ...TEXT.INVALID_H3_POSITION,
         location: {
           start: {
             column: 11,
