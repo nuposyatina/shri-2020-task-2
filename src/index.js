@@ -1,5 +1,6 @@
 const jsonToAst = require('json-to-ast');
-const { checkWarningSize, iterateChildren, checkAstType } = require('./lib');
+const { iterateChildren, checkAstType } = require('./lib');
+const { checkWarningSize } = require('./lib/warningRulesLib');
 
 const rules = [
   require('./rules/warning.text_sizes_should_be_equal'),

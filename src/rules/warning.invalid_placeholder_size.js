@@ -1,20 +1,25 @@
 const {
   findBlocks,
-  isCurrentOrMixedBlock,
   getModsValue
 } = require('../lib');
+const { isWarning } = require('../lib/warningRulesLib');
 const { WARNING } = require('../errors');
 
-const validPlaceholderSizes = ['s', 'm', 'l'];
+const VALID_PLACEHOLDER_SIZES = ['s', 'm', 'l'];
 
-module.exports = (data, ast, errors) => {
-  const isWarning = isCurrentOrMixedBlock(data, 'warning');
-  if (!isWarning) return errors;
-  const placeholders = findBlocks(data, ast, ['placeholder']);
-  if (!placeholders.length) return errors;
+/**
+ * Проверить, является ли размер блока допустимым
+ * @param {Object} block блок, который нужно проверить
+ */
+const validPlaceholderChecker = (block) => VALID_PLACEHOLDER_SIZES.includes(getModsValue(block, 'size'));
 
-  return placeholders.reduce((acc, block) => {
-    const isValidPlaceholder = validPlaceholderSizes.includes(getModsValue(block, 'size'));
+/**
+ * Проверить соблюдение правила и получить массив ошибок
+ * @param {Array} placeholders массив блоков, которые нужно проверить
+ * @param {Array} errors массив ошибок
+ */
+const getErrors = (placeholders, errors) => (
+  placeholders.reduce((acc, block) => {
     const err = {
       ...WARNING.INVALID_PLACEHOLDER_SIZE,
       location: {
@@ -22,6 +27,14 @@ module.exports = (data, ast, errors) => {
       }
     };
 
-    return isValidPlaceholder ? acc : [...acc, err];
-  }, errors);
+    return validPlaceholderChecker(block) ? acc : [...acc, err];
+  }, errors)
+);
+
+module.exports = (data, ast, errors) => {
+  if (!isWarning(data)) return errors;
+  const placeholders = findBlocks(data, ast, ['placeholder']);
+  if (!placeholders.length) return errors;
+
+  return getErrors(placeholders, errors);
 };

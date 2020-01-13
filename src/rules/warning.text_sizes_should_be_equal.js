@@ -1,15 +1,14 @@
 const {
   findBlocks,
   getEthalonSize,
-  isCurrentOrMixedBlock,
   getBlockLocation,
   getModsValue
 } = require('../lib');
+const { isWarning, sizeIsNotEthalon } = require('../lib/warningRulesLib');
 const { WARNING } = require('../errors');
 
 module.exports = (data, ast, errors, state) => {
-  const isWarning = isCurrentOrMixedBlock(data, 'warning');
-  if (!isWarning) return errors;
+  if (!isWarning(data)) return errors;
   const warningTexts = findBlocks(data, ast, ['text']);
   const ethalonSize = getEthalonSize(warningTexts);
   state.warningEthalonSize = ethalonSize;
@@ -27,7 +26,7 @@ module.exports = (data, ast, errors, state) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const text of warningTexts) {
     const textSize = getModsValue(text, 'size');
-    if (!textSize || textSize !== ethalonSize) {
+    if (sizeIsNotEthalon(textSize, ethalonSize)) {
       const err = {
         ...WARNING.TEXT_SIZES_SHOULD_BE_EQUAL,
         location: warningLocation

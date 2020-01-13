@@ -5,6 +5,11 @@
  */
 const isCurrentBlock = (data, blockName) => data.block === blockName && !data.elem;
 
+/**
+ * Проверить, примиксована ли к блоку сущность с нужным именем
+ * @param {Object|String} mix примиксованная сущность
+ * @param {String} blockName имя искомого блока
+ */
 const checkMix = (mix, blockName) => (
   mix === blockName || mix.block === blockName ? mix : null
 );
@@ -61,14 +66,32 @@ const getBlockLocation = (blockAst) => {
   };
 };
 
+/**
+ * Перебрать дочерние элементы и применить к ним переданную функцию
+ * @param {Function} f функция, которую применяем к каждому ребенку
+ * @param {Array} iterable массив контентных элементов, к которым нужно применить функцию
+ * @param {Object} ast ast-представление передаваемого массива
+ * @param {*} acc начальное значение, которое будет использоваться во время перебора элементов
+ * @param {Array} params массив дополнительных параметров
+ */
 const iterateChildren = (f, iterable, ast, acc, params = []) => (
   iterable.reduce((iAcc, el, index) => f(el, ast[index], iAcc, ...params), acc)
 );
 
+/**
+ * Проверить, входит ли имя блока в список имен
+ * @param {Array} names массив возможных имен
+ * @param {Object} node блок, имя которого нужно проверить
+ */
 const checkNodeName = (names, node) => (
   names.find((name) => isCurrentOrMixedBlock(node, name))
 );
 
+/**
+ * Проверить тип свойства ast-дерева
+ * @param {Object} property свойство ast-дерева, тип которого нужно проверить
+ * @param {String} type тип свойства
+ */
 const checkAstType = (property, type) => (
   property && property.value.type === type
 );
@@ -130,28 +153,11 @@ const getEthalonSize = (texts) => {
   return getModsValue(texts[0], 'size');
 };
 
-const checkWarningSize = (data, state) => {
-  const isWarning = isCurrentOrMixedBlock(data, 'warning');
-  // чтобы лишний раз не вычислять эталонный размер в разных правилах
-  // для одного и того же блока warning
-  if (isWarning && state.warningEthalonSizeIsChecked) {
-    state.warningEthalonSizeIsChecked = false;
-  }
-};
-
-const getFractionCount = (content, targetBlockNames) => (
-  content.reduce((acc, el) => {
-    const fractionCount = +getModsValue(el, 'm-col');
-    const isMarketing = targetBlockNames.find(
-      (block) => isCurrentOrMixedBlock(el, block)
-    );
-    if (isMarketing) {
-      return acc + fractionCount;
-    }
-    return acc;
-  }, 0)
-);
-
+/**
+ * Проверить, является ли блок заголовком
+ * @param {Object} data блок, который необходимо проверить
+ * @param {String} type тип блока
+ */
 const isHeader = (data, type) => (
   isCurrentOrMixedBlock(data, 'text') && getModsValue(data, 'type') === type
 );
@@ -162,9 +168,7 @@ module.exports = {
   isCurrentOrMixedBlock,
   getModsValue,
   getBlockLocation,
-  checkWarningSize,
   iterateChildren,
   checkAstType,
-  getFractionCount,
   isHeader
 };

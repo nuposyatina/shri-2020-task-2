@@ -1,9 +1,9 @@
 const {
   findBlocks,
   getEthalonSize,
-  isCurrentOrMixedBlock,
   getModsValue
 } = require('../lib');
+const { isWarning, sizeIsNotEthalon } = require('../lib/warningRulesLib');
 const { WARNING } = require('../errors');
 
 const SIZES = [
@@ -18,9 +18,45 @@ const SIZES = [
   'xxxl'
 ];
 
+/**
+ * Проверить, что эталонный размер не был найден
+ * @param {Object} state состояние, необходимое для проверки
+ */
+const hasNotEthalonSize = (state) => !state.warningEthalonSize && state.warningEthalonSizeIsChecked;
+
+/**
+ * Получить индекс эталонного размера в массиве допустимых размеров
+ * @param {Object} state состояние, необходимое для проверки
+ */
+const getEthalonSizeIndex = (state) => SIZES.findIndex((size) => size === state.warningEthalonSize);
+
+/**
+ * Проверить соблюдение правила и получить массив ошибок
+ * @param {Array} buttons блоки, которые нужно проверить
+ * @param {Array} errors массив ошибок
+ * @param {Number} ethalonSizeIndex индекс эталонного размера в массиве допустимых размеров
+ */
+const getErrors = (buttons, errors, ethalonSizeIndex) => (
+  buttons.reduce((acc, button) => {
+    const buttonSize = getModsValue(button, 'size');
+    const buttonEthalonSize = SIZES[ethalonSizeIndex + 1];
+
+    if (sizeIsNotEthalon(buttonSize, buttonEthalonSize)) {
+      const err = {
+        ...WARNING.INVALID_BUTTON_SIZE,
+        location: {
+          ...button.location
+        }
+      };
+      return [...acc, err];
+    }
+
+    return acc;
+  }, errors)
+);
+
 module.exports = (data, ast, errors, state) => {
-  const isWarning = isCurrentOrMixedBlock(data, 'warning');
-  if (!isWarning) return errors;
+  if (!isWarning(data)) return errors;
   const buttons = findBlocks(data, ast, ['button']);
   if (!buttons.length) return errors;
 
@@ -33,24 +69,9 @@ module.exports = (data, ast, errors, state) => {
 
   // если эталонный размер не может быть найден, значит не проводим проверку дальше,
   // этой ошибкой займется правило text_sizes_should_be_equal
-  if (!state.warningEthalonSize && state.warningEthalonSizeIsChecked) return errors;
-  const ethalonSizeIndex = SIZES.findIndex((size) => size === state.warningEthalonSize);
-  if (!ethalonSizeIndex) return errors;
+  if (hasNotEthalonSize(state)) return errors;
+  const ethalonSizeIndex = getEthalonSizeIndex(state);
+  if (ethalonSizeIndex === -1) return errors;
 
-  return buttons.reduce((acc, button) => {
-    const buttonSize = getModsValue(button, 'size');
-    const buttonEthalonSize = SIZES[ethalonSizeIndex + 1];
-
-    if (!buttonSize || buttonSize !== buttonEthalonSize) {
-      const err = {
-        ...WARNING.INVALID_BUTTON_SIZE,
-        location: {
-          ...button.location
-        }
-      };
-      return [...acc, err];
-    }
-
-    return acc;
-  }, errors);
+  return getErrors(buttons, errors, ethalonSizeIndex);
 };
