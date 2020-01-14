@@ -1,4 +1,4 @@
-const lint = require('../src');
+const lint = require('../src/lint');
 const {
   withoutButtons,
   withCorrectButton,

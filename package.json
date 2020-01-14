@@ -1,8 +1,7 @@
 {
   "name": "shri-2020-task-2",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "description": "Linter, SHRI task 2",
   "scripts": {
     "test": "jest",
     "watch": "jest --watch",

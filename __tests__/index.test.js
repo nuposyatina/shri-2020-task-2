@@ -1,4 +1,4 @@
-const lint = require('../src');
+const lint = require('../src/lint');
 /* global test expect */
 test('should works', () => {
   const json = `{
