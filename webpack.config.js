@@ -4,7 +4,8 @@ module.exports = {
   entry: { main: './src/index.js' },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'linter.js'
+    filename: 'linter.js',
+    libraryTarget: 'commonjs-module'
   },
   module: {
     rules: [

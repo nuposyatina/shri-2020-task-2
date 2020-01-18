@@ -1,7 +1,9 @@
 const lint = require('./lint');
 
-if (window) {
-  window.lint = lint;
-} else if (global) {
+if (typeof global !== 'undefined') {
   global.lint = lint;
+} else if (typeof window !== 'undefined') {
+  window.lint = lint;
 }
+
+module.exports = lint;
